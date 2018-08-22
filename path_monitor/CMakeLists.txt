@@ -1,0 +1,24 @@
+# Project configuration.
+set(PROJECT_NAME path_monitor)
+
+# Include directories.
+include_directories(${CMAKE_SOURCE_DIR}/lib)
+
+# Library.
+add_library(${PROJECT_NAME} INTERFACE)
+
+target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_INSTALL_PREFIX}/include/path_monitor)
+
+# Install.
+install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME})
+
+install(FILES path_monitor.hpp basic_path_monitor.hpp
+	DESTINATION include/path_monitor)
+
+install(FILES inotify/path_monitor_impl.hpp inotify/path_monitor_service.hpp
+	DESTINATION include/path_monitor/inotify)
+
+install(EXPORT ${PROJECT_NAME} DESTINATION lib/cmake/${PROJECT_NAME}
+	NAMESPACE path_monitor:: FILE ${PROJECT_NAME}-config.cmake
+	EXPORT_LINK_INTERFACE_LIBRARIES
+)
