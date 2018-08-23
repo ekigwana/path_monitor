@@ -7,7 +7,7 @@ include_directories(${CMAKE_SOURCE_DIR}/lib)
 # Library.
 add_library(${PROJECT_NAME} INTERFACE)
 
-target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_INSTALL_PREFIX}/include/path_monitor)
+target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_INSTALL_PREFIX}/include)
 
 # Install.
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME})
