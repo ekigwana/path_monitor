@@ -72,6 +72,14 @@ public:
 
 	~basic_path_monitor()
 	{
+		stop();
+	}
+
+	void stop()
+	{
+		if (!m_impl)
+			return;
+
 		m_service.destroy(m_impl);
 	}
 

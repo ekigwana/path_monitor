@@ -97,11 +97,14 @@ public:
 	/// Destroy a path monitor implementation.
 	void destroy()
 	{
+		std::unique_lock<std::mutex> lk(m_events_mutex);
+
+		if (!m_run)
+			return;
+
 		m_inotify_work.reset();
 		m_inotify_io_context.stop();
 		m_inotify_work_thread.join();
-
-		std::unique_lock<std::mutex> lk(m_events_mutex);
 
 		m_run = false;
 

@@ -45,11 +45,10 @@ public:
 	/// Destructor shuts down the private io_context.
 	~path_monitor_service()
 	{
-		/// Indicate that we have finished with the private io_context. Its
-		/// io_context::run() function will exit once all other work has completed.
 		m_work.reset();
+		m_work_io_context.stop();
 
-		if (m_work_thread)
+		if (m_work_thread and m_work_thread->joinable())
 			m_work_thread->join();
 	}
 
@@ -71,6 +70,9 @@ public:
 	/// Destroy a path monitor implementation.
 	void destroy(impl_type &impl)
 	{
+		if (!impl)
+			return;
+
 		// If an asynchronous call is currently waiting for an event
 		// we must interrupt the blocked call to make sure it returns.
 		impl->destroy();
@@ -134,7 +136,7 @@ public:
 					m_handler,
 					std::system_error(std::error_code(static_cast<int>(std::errc::operation_canceled), std::system_category()),
 							  "service::path_monitor_service::monitor_operation: operation canceled"),
-					path_monitor_event()));
+							  path_monitor_event()));
 			}
 		}
 
