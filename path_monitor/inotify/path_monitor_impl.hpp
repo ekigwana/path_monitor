@@ -97,18 +97,21 @@ public:
 	/// Destroy a path monitor implementation.
 	void destroy()
 	{
-		std::unique_lock<std::mutex> lk(m_events_mutex);
+		{
+			std::unique_lock<std::mutex> lk(m_events_mutex);
 
-		if (!m_run)
-			return;
+			if (!m_run)
+				return;
 
-		m_inotify_work.reset();
-		m_inotify_io_context.stop();
-		m_inotify_work_thread.join();
+			m_inotify_work.reset();
+			m_inotify_io_context.stop();
 
-		m_run = false;
+			m_run = false;
+		}
 
 		m_events_cond.notify_all();
+
+		m_inotify_work_thread.join();
 	}
 
 	/// Get earliest inotify event (FIFO).
