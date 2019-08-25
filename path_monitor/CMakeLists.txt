@@ -1,6 +1,3 @@
-# Project configuration.
-set(PROJECT_NAME path_monitor)
-
 # Include directories.
 include_directories(${CMAKE_SOURCE_DIR}/lib)
 

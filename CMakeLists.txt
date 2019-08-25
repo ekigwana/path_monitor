@@ -8,6 +8,8 @@ option(CMAKE_PREFIX_PATHS "Additional CMake prefix paths")
 option(WITH_EXAMPLE "Enable Example." ON)
 option(WITH_TESTS "Enable Tests." ON)
 
+set(PROJECT_NAME path_monitor)
+project(${PROJECT_NAME} C CXX)
 if(NOT CMAKE_PREFIX_PATHS)
 	set(CMAKE_PREFIX_PATHS "")
 else()
