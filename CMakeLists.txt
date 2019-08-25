@@ -20,6 +20,9 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
         set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/image" CACHE PATH "default installation path" FORCE)
 endif()
 
+# CMake helpers.
+include(GNUInstallDirs)
+
 add_subdirectory(path_monitor)
 
 if(WITH_EXAMPLE)
